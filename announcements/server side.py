@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS 
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
 import sqlite3
 
 app = Flask(__name__)
+CORS(app) 
 UPLOAD_FOLDER = 'uploads'
 DB_PATH = 'database.sqlite3'
 
