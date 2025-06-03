@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
 from datetime import datetime
+from werkzeug.utils import secure_filename 
 
 app = Flask(__name__)
 
@@ -26,7 +27,8 @@ def upload():
         return jsonify({'status': 'error', 'message': 'Only PDFs allowed'}), 400
 
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    filename = f"{timestamp}_{file.filename}"
+    safe_name = secure_filename(file.filename)
+    filename = f"{timestamp}_{safe_name}"
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # <- Redundant safety net
     file.save(filepath)
