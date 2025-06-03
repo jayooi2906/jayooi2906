@@ -28,6 +28,7 @@ def upload():
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     filename = f"{timestamp}_{file.filename}"
     filepath = os.path.join(UPLOAD_FOLDER, filename)
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # <- Redundant safety net
     file.save(filepath)
 
     return jsonify({
